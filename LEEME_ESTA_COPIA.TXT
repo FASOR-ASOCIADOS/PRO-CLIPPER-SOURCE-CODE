@@ -1,0 +1,14 @@
+Copia de PROSRC anterior a la impresion a PDF (22/09/2026)
+==========================================================
+
+Esta es la carpeta PROSRC tal como estaba antes de agregar el modulo PDF.PRG:
+124 modulos de la aplicacion, sin ningun cambio respecto de los .UDF que dejo
+Rescue5. Es la version cuyo PRO.EXE mide 797.696 bytes con MD5
+4bf13aef5840374fd35fa119a981007e, la que se verifico procedimiento por
+procedimiento contra el PRO.exe original.
+
+Se conserva como punto de retorno y NO se compila ni se copia a la PC con
+Windows XP: para eso se usa siempre la carpeta ..\PROSRC.
+
+Las diferencias entre las dos carpetas estan en la seccion 11.3 de
+GUIA_COMPILACION_Y_VERIFICACION.md.

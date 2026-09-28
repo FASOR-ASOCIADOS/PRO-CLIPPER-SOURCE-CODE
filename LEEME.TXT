@@ -1,0 +1,90 @@
+PROSRC - Fuentes y guion para reconstruir PRO.EXE
+=================================================
+
+Contenido
+---------
+  *.PRG         124 modulos de la aplicacion, recuperados de PRO.EXE con
+                Rescue5 1.11. Son los mismos .UDF de la carpeta principal,
+                sin ningun cambio: solo se renombraron a .PRG.
+  PRO.RMK       Guion de RMAKE: compila cada modulo por separado
+                (clipper MODULO.PRG /m /n) y enlaza con RTLink.
+  PRO.LNK       Lista de modulos y librerias para RTLink.
+  COMPILAR.BAT  Ejecuta todo el proceso y guarda el detalle en COMPILAR.LOG.
+
+Requisitos (PC con Windows XP)
+------------------------------
+  CA-Clipper 5.2c instalado en C:\CLIPPER5, con BIN\CLIPPER.EXE,
+  BIN\RMAKE.EXE, BIN\RTLINK.EXE y las librerias de LIB (CLIPPER, EXTEND,
+  DBFNTX y TERMINAL). Si esta en otra carpeta, cambie la linea
+  SET CLIPPERHOME= al principio de COMPILAR.BAT.
+
+Como compilar
+-------------
+  1. Copie esta carpeta a una ruta corta y sin espacios, por ejemplo
+     C:\PROSRC. Los programas DOS no admiten rutas con espacios.
+  2. Abra una ventana de comandos (Inicio > Ejecutar > cmd) y escriba:
+        C:
+        CD \PROSRC
+        COMPILAR
+  3. Si termina con "COMPILACION CORRECTA", el nuevo ejecutable es
+     C:\PROSRC\PRO.EXE. Si algo falla, se muestran los mensajes de error
+     y el detalle completo queda en COMPILAR.LOG.
+
+  COMPILAR         recompila solo los .PRG que cambiaron desde la ultima
+                   compilacion y vuelve a enlazar.
+  COMPILAR TODO    recompila los 124 modulos.
+
+  La primera compilacion tarda un par de minutos.
+
+Instalacion
+-----------
+  COMPILAR.BAT no toca produccion. Respalde el PRO.EXE actual (por
+  ejemplo C:\PRO\PRO.EXE), pruebe el nuevo y recien entonces reemplacelo.
+
+Por que fallaba el intento de la carpeta Compilacion
+----------------------------------------------------
+  - "CLIPPER @PRO" con un archivo .CLP compila todos los fuentes en un
+    solo PRO.OBJ. Con tantos modulos se llena la tabla de simbolos:
+    "Fatal C3018 Too many symbols".
+  - Sin la opcion /N, Clipper crea un procedimiento con el nombre de
+    cada archivo, que choca con el PROCEDURE de igual nombre que ya trae
+    cada fuente: "Error C2021 Redefinition of procedure or function".
+  - La division de IOCC en M_IOCC*.PRG perdio codigo. Aqui se usa el
+    IOCC original completo.
+  Aqui cada modulo se compila por separado con /M /N, tal como indica el
+  PRO.RMK que genero Rescue5.
+
+Modulos estandar de CA-Clipper
+------------------------------
+  ERRORSYS, GETSYS, BROWSE y __REPORT (REPORT FORM) no estan en esta
+  carpeta: son modulos de la libreria de CA-Clipper que Rescue5 tambien
+  descompilo. El PRO.EXE original los tomaba de CLIPPER.LIB y aqui se
+  hace lo mismo. Si alguna vez necesita modificarlos, copie el .UDF de
+  la carpeta principal como .PRG y agreguelo a PRO.RMK y a PRO.LNK.
+
+Al editar los fuentes
+---------------------
+  - Mantenga los finales de linea de DOS (CRLF). Un .BAT, .RMK o .LNK
+    guardado con finales de Unix (LF) falla en XP.
+  - Los acentos y la enie estan en la codificacion de DOS (pagina de
+    codigos 850/437). Por ejemplo, en MAIN.PRG las variables A, E, I, O,
+    U, NMI y NMA guardan las vocales acentuadas y la enie (minuscula y
+    mayuscula). Abra y guarde los .PRG con esa codificacion: si el
+    editor los convierte a UTF-8, esos caracteres se rompen.
+  - Si agrega un modulo nuevo, sumelo a PRO.RMK (su linea de dependencia
+    y la lista de PRO.EXE) y a PRO.LNK.
+
+Verificacion
+------------
+  Esta carpeta se compilo con el mismo Clipper 5.2c y RTLink 3.14B, en
+  un emulador de DOS: los 124 modulos compilan sin errores ni
+  advertencias y el enlace es limpio. El PRO.EXE obtenido se volvio a
+  descompilar con Rescue5 1.11 y sus 253 procedimientos son identicos a
+  los del PRO.EXE original. En las pruebas de arranque se comporta
+  igual que el original.
+
+  Referencia de tamano: el PRO.EXE compilado aqui mide 797.696 bytes
+  (el original, 756.736). La diferencia viene de que ahora hay 124
+  archivos .OBJ, cada uno con su propia tabla de simbolos, en lugar de
+  uno solo. Si en la XP se obtiene el mismo tamano, el resultado es el
+  mismo ejecutable que se verifico.
