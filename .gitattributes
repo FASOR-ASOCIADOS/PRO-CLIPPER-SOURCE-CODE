@@ -1,0 +1,4 @@
+# Los fuentes estan en pagina de codigos 850 con fin de linea CRLF (DOS).
+# Git no debe convertir fines de linea en ningun archivo, en ningun sistema:
+# asi los .PRG, .BAT y .TXT conservan CRLF y compilar-linux.sh conserva LF.
+* -text
