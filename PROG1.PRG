@@ -248,12 +248,12 @@ PROCEDURE PROG1()
             IF WNOMIND1 <> SPACE(8)
 
                MEMVAR->WNOMIND1 := ALLTRIM(WNOMIND1)
-               DBCREATEIN("C:\BASURA.KEY", "&WNOMIND+&WNOMIND1", (&(;
+               DBCREATEIN("C:\PROTMP\BASURA.KEY", "&WNOMIND+&WNOMIND1", (&(;
                      "{|| &WNOMIND+&WNOMIND1}")), NIL)
 
             ELSE
 
-               DBCREATEIN("C:\BASURA.KEY", WNOMIND, (&("{||" + WNOMIND + ;
+               DBCREATEIN("C:\PROTMP\BASURA.KEY", WNOMIND, (&("{||" + WNOMIND + ;
                      "}")), NIL)
 
             ENDIF

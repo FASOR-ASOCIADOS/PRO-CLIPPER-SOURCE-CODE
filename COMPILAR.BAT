@@ -1,92 +1,66 @@
 @ECHO OFF
 REM ==================================================================
-REM  COMPILAR.BAT - Reconstruye PRO.EXE con CA-Clipper 5.2c + RTLink
+REM  COMPILAR.BAT - Genera PRO.EXE (Harbour, Windows x64)
 REM
-REM  Uso:  COMPILAR         compila los .PRG modificados y enlaza
-REM        COMPILAR TODO    recompila todos los modulos
+REM  Uso:  COMPILAR          compila lo que cambio
+REM        COMPILAR TODO     compila todo de nuevo
 REM
-REM  Ejecutar dentro de esta carpeta, copiada a una ruta corta y sin
-REM  espacios (por ejemplo C:\PROSRC). El ejecutable queda en PRO.EXE
-REM  de esta misma carpeta y el detalle completo en COMPILAR.LOG.
+REM  Requiere Harbour 3.2 para Windows de 64 bits y el compilador C
+REM  MinGW-w64 (gcc de 64 bits), en el PATH o instalados en las carpetas
+REM  que indican HB_DIR y MINGW_DIR (abajo).
+REM  Ver docs\COMPILAR_EN_WINDOWS.md.
 REM ==================================================================
 
 SETLOCAL
 
-REM ---- Carpeta donde esta instalado CA-Clipper 5.2 (ajustar si cambia)
-SET CLIPPERHOME=C:\CLIPPER5
+REM ---- Carpeta de Harbour (ajustar si es otra)
+SET HB_DIR=C:\hb32
 
-REM ---- Entorno para CLIPPER, RMAKE y RTLINK
-SET PATH=%CLIPPERHOME%\BIN;%SystemRoot%\system32;%SystemRoot%
-SET LIB=%CLIPPERHOME%\LIB
-SET INCLUDE=%CLIPPERHOME%\INCLUDE
-SET CLIPPERCMD=
-SET OBJ=
+REM ---- Carpeta de MinGW-w64 (ajustar si es otra)
+SET MINGW_DIR=C:\mingw64
+
+IF EXIST "%HB_DIR%\bin\hbmk2.exe" SET PATH=%HB_DIR%\bin;%PATH%
+IF EXIST "%MINGW_DIR%\bin\gcc.exe" SET PATH=%MINGW_DIR%\bin;%PATH%
+
+hbmk2 -version >NUL 2>&1
+IF ERRORLEVEL 1 GOTO :SIN_HARBOUR
+
+gcc --version >NUL 2>&1
+IF ERRORLEVEL 1 GOTO :SIN_MINGW
+
+SET OPCION=
+IF /I "%1"=="TODO" SET OPCION=-rebuild
 
 ECHO.
-ECHO  Reconstruccion de PRO.EXE - CA-Clipper 5.2c + RTLink
-ECHO  -----------------------------------------------------
+ECHO  Compilando PRO.EXE con Harbour...
 ECHO.
-
-REM ---- Los programas DOS no admiten rutas con espacios
-SET RUTA=%CD%
-IF NOT "%RUTA%"=="%RUTA: =%" GOTO ERR_RUTA
-
-IF NOT EXIST %CLIPPERHOME%\BIN\CLIPPER.EXE GOTO ERR_CLIPPER
-IF NOT EXIST %CLIPPERHOME%\BIN\RMAKE.EXE GOTO ERR_CLIPPER
-IF NOT EXIST %CLIPPERHOME%\BIN\RTLINK.EXE GOTO ERR_CLIPPER
-IF NOT EXIST %CLIPPERHOME%\LIB\CLIPPER.LIB GOTO ERR_CLIPPER
-IF NOT EXIST PRO.RMK GOTO ERR_CARPETA
-IF NOT EXIST PRO.LNK GOTO ERR_CARPETA
-IF NOT EXIST MAIN.PRG GOTO ERR_CARPETA
-
-REM ---- Archivos temporales del compilador y del enlazador
-IF NOT EXIST TMP\NUL MD TMP
-SET TMP=%CD%\TMP
-SET TEMP=%CD%\TMP
-
-SET FORZAR=
-IF /I "%1"=="TODO" SET FORZAR=/F
-
-ECHO  Compilando y enlazando, espere...
-RMAKE %FORZAR% PRO > COMPILAR.LOG
-IF ERRORLEVEL 1 GOTO ERR_BUILD
-IF NOT EXIST PRO.EXE GOTO ERR_BUILD
+hbmk2 pro.hbp -comp=mingw64 %OPCION%
+IF ERRORLEVEL 1 GOTO :FALLO
+IF NOT EXIST PRO.EXE GOTO :FALLO
 
 ECHO.
 ECHO  COMPILACION CORRECTA: %CD%\PRO.EXE
 ECHO.
-ECHO  Antes de instalarlo, respalde el PRO.EXE de produccion
-ECHO  (por ejemplo C:\PRO\PRO.EXE) y luego copie este en su lugar.
-GOTO FIN_OK
+ECHO  Antes de instalarlo, respalde el ejecutable que este en uso.
+GOTO :FIN_OK
 
-:ERR_RUTA
-ECHO  ERROR: la ruta de esta carpeta contiene espacios:
-ECHO         %CD%
-ECHO  Copie la carpeta a una ruta corta, por ejemplo C:\PROSRC
-GOTO FIN_ERROR
+:SIN_HARBOUR
+ECHO  ERROR: no se encontro hbmk2 (Harbour).
+ECHO  Instale Harbour 3.2 para Windows x64 y ajuste la linea
+ECHO  SET HB_DIR= al principio de este archivo.
+GOTO :FIN_ERROR
 
-:ERR_CLIPPER
-ECHO  ERROR: no se encontro CA-Clipper completo en %CLIPPERHOME%
-ECHO  Se necesitan BIN\CLIPPER.EXE, BIN\RMAKE.EXE, BIN\RTLINK.EXE
-ECHO  y LIB\CLIPPER.LIB. Si Clipper esta en otra carpeta, corrija
-ECHO  la linea SET CLIPPERHOME= al principio de este archivo.
-GOTO FIN_ERROR
+:SIN_MINGW
+ECHO  ERROR: no se encontro gcc (MinGW-w64).
+ECHO  Instale MinGW-w64 de 64 bits y ajuste la linea
+ECHO  SET MINGW_DIR= al principio de este archivo.
+GOTO :FIN_ERROR
 
-:ERR_CARPETA
-ECHO  ERROR: falta PRO.RMK, PRO.LNK o MAIN.PRG en esta carpeta.
-ECHO  Ejecute COMPILAR.BAT dentro de la carpeta PROSRC.
-GOTO FIN_ERROR
-
-:ERR_BUILD
-ECHO  ERROR: fallo la compilacion o el enlace. Mensajes:
+:FALLO
 ECHO.
-FINDSTR /I /C:"error" /C:"fatal" /C:"warning" /C:"undefined" /C:".OBJ" COMPILAR.LOG
-ECHO.
-ECHO  Detalle completo en COMPILAR.LOG
-REM RTLINK escribe PRO.EXE aunque falten simbolos: se borra para
-REM que un ejecutable defectuoso no llegue a produccion.
+ECHO  ERROR: la compilacion fallo. Revise los mensajes de arriba.
 IF EXIST PRO.EXE DEL PRO.EXE
-GOTO FIN_ERROR
+GOTO :FIN_ERROR
 
 :FIN_ERROR
 ECHO.

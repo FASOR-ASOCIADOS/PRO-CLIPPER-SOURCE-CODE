@@ -1,0 +1,12 @@
+# Proyecto Harbour - Sistema de Produccion (PRO)
+# Destino: Windows x64, ventana propia (GTWVT)
+#
+#   hbmk2 pro.hbp            compila lo que cambio
+#   hbmk2 pro.hbp -rebuild   compila todo de nuevo
+
+-oPRO
+-gtwvt
+-w1
+-ucompat.ch
+
+*.PRG

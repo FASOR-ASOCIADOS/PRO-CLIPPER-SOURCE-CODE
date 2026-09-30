@@ -1,90 +1,111 @@
-PROSRC - Fuentes y guion para reconstruir PRO.EXE
-=================================================
+PRO - Sistema de Produccion, version Harbour (Windows x64)
+===========================================================
 
-Contenido
----------
-  *.PRG         124 modulos de la aplicacion, recuperados de PRO.EXE con
-                Rescue5 1.11. Son los mismos .UDF de la carpeta principal,
-                sin ningun cambio: solo se renombraron a .PRG.
-  PRO.RMK       Guion de RMAKE: compila cada modulo por separado
-                (clipper MODULO.PRG /m /n) y enlaza con RTLink.
-  PRO.LNK       Lista de modulos y librerias para RTLink.
-  COMPILAR.BAT  Ejecuta todo el proceso y guarda el detalle en COMPILAR.LOG.
+Que es esta rama
+----------------
+  La rama "harbour" contiene el programa adaptado para compilar con Harbour
+  y correr en PC de 64 bits (Windows 7, 10, 11), sin DOS ni NTVDM.
 
-Requisitos (PC con Windows XP)
-------------------------------
-  CA-Clipper 5.2c instalado en C:\CLIPPER5, con BIN\CLIPPER.EXE,
-  BIN\RMAKE.EXE, BIN\RTLINK.EXE y las librerias de LIB (CLIPPER, EXTEND,
-  DBFNTX y TERMINAL). Si esta en otra carpeta, cambie la linea
-  SET CLIPPERHOME= al principio de COMPILAR.BAT.
+  Parte de la rama "main": los 124 modulos tal como los recupero Rescue5,
+  que se compilan con CA-Clipper 5.2c para la PC con Windows XP. Aqui solo se
+  agrega lo necesario para Harbour; la logica del programa no cambia.
 
-Como compilar
--------------
-  1. Copie esta carpeta a una ruta corta y sin espacios, por ejemplo
-     C:\PROSRC. Los programas DOS no admiten rutas con espacios.
-  2. Abra una ventana de comandos (Inicio > Ejecutar > cmd) y escriba:
-        C:
-        CD \PROSRC
-        COMPILAR
-  3. Si termina con "COMPILACION CORRECTA", el nuevo ejecutable es
-     C:\PROSRC\PRO.EXE. Si algo falla, se muestran los mensajes de error
-     y el detalle completo queda en COMPILAR.LOG.
+  Esta version NO tiene impresion a PDF.
 
-  COMPILAR         recompila solo los .PRG que cambiaron desde la ultima
-                   compilacion y vuelve a enlazar.
-  COMPILAR TODO    recompila los 124 modulos.
+Compilar
+--------
+  En Windows:          COMPILAR TODO         ver docs\COMPILAR_EN_WINDOWS.md
+  Desde Linux:         ./compilar-linux.sh todo   ver docs/COMPILAR_EN_LINUX.md
 
-  La primera compilacion tarda un par de minutos.
+  Las dos formas usan los mismos fuentes y generan el mismo tipo de
+  ejecutable: PRO.exe para Windows x64. PRO.exe y la carpeta .hbmk se generan
+  al compilar y no se guardan en el repositorio.
 
-Instalacion
------------
-  COMPILAR.BAT no toca produccion. Respalde el PRO.EXE actual (por
-  ejemplo C:\PRO\PRO.EXE), pruebe el nuevo y recien entonces reemplacelo.
+Que se agrego respecto de la rama main (y por que)
+--------------------------------------------------
+  1. HBMAIN.PRG (nuevo)
+     Los fuentes descompilados no declaran MAIN: el programa empieza en
+     PRO(). Harbour arranca por MAIN, asi que aqui se la da. Ademas fija:
+       - el mismo esquema de bloqueo de archivos que CA-Clipper 5.2, para
+         poder compartir los datos con las PC que sigan usando el EXE viejo;
+       - la pagina de codigos 850 (acentos, enie y recuadros);
+       - el titulo de la ventana;
+       - la creacion de C:\PROTMP al arrancar.
 
-Por que fallaba el intento de la carpeta Compilacion
-----------------------------------------------------
-  - "CLIPPER @PRO" con un archivo .CLP compila todos los fuentes en un
-    solo PRO.OBJ. Con tantos modulos se llena la tabla de simbolos:
-    "Fatal C3018 Too many symbols".
-  - Sin la opcion /N, Clipper crea un procedimiento con el nombre de
-    cada archivo, que choca con el PROCEDURE de igual nombre que ya trae
-    cada fuente: "Error C2021 Redefinition of procedure or function".
-  - La division de IOCC en M_IOCC*.PRG perdio codigo. Aqui se usa el
-    IOCC original completo.
-  Aqui cada modulo se compila por separado con /M /N, tal como indica el
-  PRO.RMK que genero Rescue5.
+  2. HBCOMPAT.PRG (nuevo)
+     - DBCREATEIN(): Clipper guarda los nombres de funcion truncados a 10
+       caracteres. Harbour reconoce casi todos esos nombres cortos; el unico
+       que falta se reenvia aqui a dbCreateIndex().
+     - HBRUN(): reemplaza las ordenes de DOS que el programa ejecutaba con
+       __RUN(). En Windows moderno cada una abriria una ventana de consola:
+         "MODE LPT1:..."  se ignora (ya no configura nada)
+         "DEL A*."        se hace dentro del programa
+         "MD ..."         se hace dentro del programa
+         "CD"             se ignora
+         el resto         sigue yendo al sistema operativo
 
-Modulos estandar de CA-Clipper
-------------------------------
-  ERRORSYS, GETSYS, BROWSE y __REPORT (REPORT FORM) no estan en esta
-  carpeta: son modulos de la libreria de CA-Clipper que Rescue5 tambien
-  descompilo. El PRO.EXE original los tomaba de CLIPPER.LIB y aqui se
-  hace lo mismo. Si alguna vez necesita modificarlos, copie el .UDF de
-  la carpeta principal como .PRG y agreguelo a PRO.RMK y a PRO.LNK.
+  3. compat.ch (nuevo)
+     Desvia __RUN() hacia HBRUN() en todos los modulos, sin editar los 124
+     fuentes. Se incluye con la opcion -u de pro.hbp.
 
-Al editar los fuentes
----------------------
-  - Mantenga los finales de linea de DOS (CRLF). Un .BAT, .RMK o .LNK
-    guardado con finales de Unix (LF) falla en XP.
-  - Los acentos y la enie estan en la codificacion de DOS (pagina de
-    codigos 850/437). Por ejemplo, en MAIN.PRG las variables A, E, I, O,
-    U, NMI y NMA guardan las vocales acentuadas y la enie (minuscula y
-    mayuscula). Abra y guarde los .PRG con esa codificacion: si el
-    editor los convierte a UTF-8, esos caracteres se rompen.
-  - Si agrega un modulo nuevo, sumelo a PRO.RMK (su linea de dependencia
-    y la lista de PRO.EXE) y a PRO.LNK.
+  4. pro.hbp, COMPILAR.BAT, compilar-linux.sh
+     Proyecto de hbmk2 y scripts de compilacion. COMPILAR.BAT reemplaza al
+     de Clipper; PRO.LNK y PRO.RMK (RTLink y RMAKE) no se usan en Harbour y
+     se quitaron de esta rama.
 
-Verificacion
-------------
-  Esta carpeta se compilo con el mismo Clipper 5.2c y RTLink 3.14B, en
-  un emulador de DOS: los 124 modulos compilan sin errores ni
-  advertencias y el enlace es limpio. El PRO.EXE obtenido se volvio a
-  descompilar con Rescue5 1.11 y sus 253 procedimientos son identicos a
-  los del PRO.EXE original. En las pruebas de arranque se comporta
-  igual que el original.
+  5. Cambios en los modulos del programa (los unicos)
+     - MAIN.PRG: recorta el directorio de trabajo antes de armar rutas.
+       Windows 7 en adelante no ignora los espacios al final de una carpeta
+       ("F:\PRO      \ZDIS.MEM" daba "DOS Error 3").
+     - Las rutas de archivos temporales pasan de la raiz de C: a C:\PROTMP
+       (C:\BASURA*, C:\COSTOS.NTX, C:\FILETEMP*, C:\FILETEM1*, C:\ORDTEM*,
+       C:\&WAB). Solo cambia el prefijo del texto. Windows no deja crear
+       archivos sueltos en la raiz de C: a un usuario sin privilegios de
+       administrador, aunque se le den permisos.
+     - LISVALPR.PRG: dos rutas decian "C:BASURA" sin barra invertida, que
+       apuntaba al directorio actual de C: en vez de la raiz.
+     - LIB.PRG: __RUN("TYPE C:\BASURA.TXT > PRN") pasa a leer
+       C:\PROTMP\BASURA.TXT, que es donde ahora escribe ENIM().
+     No se cambio ninguna otra linea de logica. "c:\YO" no se toco: no es
+     un temporal sino la marca que hace entrar con el usuario 0.
 
-  Referencia de tamano: el PRO.EXE compilado aqui mide 797.696 bytes
-  (el original, 756.736). La diferencia viene de que ahora hay 124
-  archivos .OBJ, cada uno con su propia tabla de simbolos, en lugar de
-  uno solo. Si en la XP se obtiene el mismo tamano, el resultado es el
-  mismo ejecutable que se verifico.
+Instalar
+--------
+  PRO.exe no necesita ninguna DLL extra: solo usa las de Windows. Se copia a
+  la PC y se ejecuta; los datos se siguen tomando del disco y directorio de
+  trabajo que pide al arrancar.
+
+  El ejecutable de 64 bits NO corre en Windows XP: esas PC siguen con el EXE
+  de Clipper (rama main). Las dos versiones pueden trabajar sobre los mismos
+  archivos a la vez.
+
+Que se verifico
+---------------
+  - Los 126 modulos (124 del programa mas HBMAIN y HBCOMPAT) compilan sin
+    errores, desde Linux y dentro de Windows 7 x64. Las 9.792 advertencias
+    son todas "W0001 Ambiguous reference", propias del codigo descompilado.
+  - No queda ninguna funcion referenciada y faltante.
+  - Con datos reales: arranca, recorre menus, movimientos y la consulta
+    general de ordenes, usa C:\PROTMP para los temporales, no crea archivos
+    en la raiz de C: y sale limpio (Wine y maquina virtual Windows 7 x64).
+  - Las pantallas coinciden caracter por caracter con las del EXE de
+    Clipper, y cada version lee los indices que genera la otra.
+
+Pendientes y diferencias conocidas
+-----------------------------------
+  1. IMPRESION
+     La unica salida a impresora es "TYPE C:\PROTMP\BASURA.TXT > PRN" y no va
+     a funcionar si no hay una impresora en LPT1. "MODE LPT1:132" ya no hace
+     nada. El texto a imprimir queda siempre en C:\PROTMP\BASURA.TXT.
+
+  2. ORDEN DE LAS LISTAS CON CLAVES REPETIDAS
+     Cuando las claves de un indice se repiten (por ejemplo las ordenes 999),
+     Harbour no desempata igual que Clipper: las filas salen en otro orden.
+     Los datos son los mismos.
+
+  3. __RUN("DATE")
+     La opcion que pedia "la fecha para regresar" sigue abriendo el
+     interprete de comandos. En Windows moderno cambiar la fecha del sistema
+     pide permisos de administrador.
+
+  4. Falta probarlo en Windows 10 u 11.

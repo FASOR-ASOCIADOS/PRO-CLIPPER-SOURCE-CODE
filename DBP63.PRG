@@ -130,11 +130,11 @@ PROCEDURE DBP63()
             WORDFIN + 1 .AND. YEAR(FECHA) = WANOV}, NIL, NIL, NIL, .F.)
       MEMVAR->WAB := "BASURA.DBF"
       BA()
-      __DBCOPY("C:\BASURA", {}, {||DELETED()}, NIL, NIL, NIL, .F., NIL)
+      __DBCOPY("C:\PROTMP\BASURA", {}, {||DELETED()}, NIL, NIL, NIL, .F., NIL)
       __DBPACK()
       DBCLOSEARE()
       DBUSEAREA(.F., NIL, "&ZDIS\&WDIRECTO\&WNUEVO", NIL, NIL, .F.)
-      __DBAPP("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+      __DBAPP("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
       DBEVAL({||DBRECALL()}, NIL, NIL, NIL, NIL, .F.)
       DBCLOSEARE()
       MEMVAR->OPC := "N"

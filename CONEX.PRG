@@ -129,23 +129,23 @@ PROCEDURE CONEX()
 
    IF WSOR = "T"
 
-      __DBSORT("C:\BASURA", {"CODTAR", "CODOPE", "LETORD"}, NIL, NIL, NIL, ;
+      __DBSORT("C:\PROTMP\BASURA", {"CODTAR", "CODOPE", "LETORD"}, NIL, NIL, NIL, ;
             NIL, .F.)
 
    ELSEIF WSOR = "O"
 
-      __DBSORT("C:\BASURA", {"CODOPE", "CODTAR", "LETORD"}, NIL, NIL, NIL, ;
+      __DBSORT("C:\PROTMP\BASURA", {"CODOPE", "CODTAR", "LETORD"}, NIL, NIL, NIL, ;
             NIL, .F.)
 
    ELSEIF WSOR = "N"
 
-      __DBSORT("C:\BASURA", {"LETORD", "CODOPE", "CODTAR"}, NIL, NIL, NIL, ;
+      __DBSORT("C:\PROTMP\BASURA", {"LETORD", "CODOPE", "CODTAR"}, NIL, NIL, NIL, ;
             NIL, .F.)
 
    ENDIF
 
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
    DBEVAL({||FIELD->EXCEDE := PAGADAS - MAXIMO}, NIL, NIL, NIL, NIL, .F.)
 
    IF WSOL = "S"

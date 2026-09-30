@@ -12,9 +12,9 @@ PROCEDURE ORGMAEPA()
    BA()
    MEMVAR->WAB := "BASURA1.DBF"
    BA()
-   __DBCOPYST("C:\BASURA", {})
+   __DBCOPYST("C:\PROTMP\BASURA", {})
    DBSELECTAR("40")
-   DBUSEAREA(.F., NIL, "c:\basura", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "c:\protmp\basura", NIL, NIL, .F.)
    MEMVAR->CC := 1
 
    DO WHILE CC < 21
@@ -34,11 +34,11 @@ PROCEDURE ORGMAEPA()
    ENDDO
 
    DBSELECTAR("40")
-   __DBSORT("c:\basura1", {"codins2"}, {||CODINS1 <> "    "}, NIL, NIL, ;
+   __DBSORT("c:\protmp\basura1", {"codins2"}, {||CODINS1 <> "    "}, NIL, NIL, ;
          NIL, .F.)
    DBCLOSEARE()
    DBSELECTAR("40")
-   DBUSEAREA(.F., NIL, "C:\BASURA1", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA1", NIL, NIL, .F.)
 
    DO WHILE  .NOT. EOF()
 

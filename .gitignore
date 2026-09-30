@@ -1,0 +1,4 @@
+# Se generan al compilar
+.hbmk/
+*.exe
+*.EXE

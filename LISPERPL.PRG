@@ -46,21 +46,21 @@ PROCEDURE LISPERPL()
 
    IF OPC = "A"
 
-      __DBSORT("C:\BASURA", {"APE", "NOM"}, NIL, NIL, NIL, NIL, .F.)
+      __DBSORT("C:\PROTMP\BASURA", {"APE", "NOM"}, NIL, NIL, NIL, NIL, .F.)
 
    ELSEIF OPC = "P"
 
-      __DBSORT("C:\BASURA", {"PUNTOS", "APE", "NOM"}, NIL, NIL, NIL, NIL, ;
+      __DBSORT("C:\PROTMP\BASURA", {"PUNTOS", "APE", "NOM"}, NIL, NIL, NIL, NIL, ;
             .F.)
 
    ELSE
 
-      __DBSORT("C:\BASURA", {"CODOPE", "APE"}, NIL, NIL, NIL, NIL, .F.)
+      __DBSORT("C:\PROTMP\BASURA", {"CODOPE", "APE"}, NIL, NIL, NIL, NIL, .F.)
 
    ENDIF
 
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
    PIDEIMP()
    __RUN("MODE LPT1:132")
    __REPORTFO("LISPERPL", .T., NIL, .F., NIL, NIL, NIL, NIL, .F., .F., NIL,;

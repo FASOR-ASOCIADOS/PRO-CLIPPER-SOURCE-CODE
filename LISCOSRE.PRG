@@ -97,7 +97,7 @@ PROCEDURE LISCOSRE()
 
       ESPERE()
       ACOSE()
-      __DBCOPY("C:\BASURA", {}, {||CODPRO = WCOD}, NIL, NIL, NIL, .F., NIL)
+      __DBCOPY("C:\PROTMP\BASURA", {}, {||CODPRO = WCOD}, NIL, NIL, NIL, .F., NIL)
       MEMVAR->SWUNITARIO := 1
       DBCLOSEARE()
 
@@ -137,7 +137,7 @@ PROCEDURE LISCOSRE()
       ENDIF
 
       ACOSE()
-      __DBCOPY("C:\BASURA", {}, {||(NUMORD > WDESDE .OR. NUMORD = WDESDE) ;
+      __DBCOPY("C:\PROTMP\BASURA", {}, {||(NUMORD > WDESDE .OR. NUMORD = WDESDE) ;
             .AND. (NUMORD < WHASTA .OR. NUMORD = WHASTA)}, NIL, NIL, NIL, ;
             .F., NIL)
       DBCLOSEARE()
@@ -146,7 +146,7 @@ PROCEDURE LISCOSRE()
 
    DBCLOSEARE()
    DBSELECTAR("1")
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
    MEMVAR->WAB := "BASURA.NTX"
    BA()
 
@@ -171,13 +171,13 @@ PROCEDURE LISCOSRE()
 
       IF LASTREC() > 1
 
-         DBCREATEIN("C:\BASURA", "NUMORD", {||NUMORD}, NIL)
-         __DBCOPY("C:\FILETEMP", {}, {||ACTUALIZAD = "C"}, NIL, NIL, NIL, ;
+         DBCREATEIN("C:\PROTMP\BASURA", "NUMORD", {||NUMORD}, NIL)
+         __DBCOPY("C:\PROTMP\FILETEMP", {}, {||ACTUALIZAD = "C"}, NIL, NIL, NIL, ;
                .F., NIL)
 
       ELSE
 
-         __DBCOPY("C:\FILETEMP.DBF", {}, NIL, NIL, NIL, NIL, .F., NIL)
+         __DBCOPY("C:\PROTMP\FILETEMP.DBF", {}, NIL, NIL, NIL, NIL, .F., NIL)
 
       ENDIF
 
@@ -187,13 +187,13 @@ PROCEDURE LISCOSRE()
 
       IF LASTREC() > 1
 
-         DBCREATEIN("C:\BASURA", "NUMORD", {||NUMORD}, NIL)
-         __DBCOPY("C:\FILETEMP", {}, {||ACTUALIZAD = "C" .AND. VAL(CODPRO) ;
+         DBCREATEIN("C:\PROTMP\BASURA", "NUMORD", {||NUMORD}, NIL)
+         __DBCOPY("C:\PROTMP\FILETEMP", {}, {||ACTUALIZAD = "C" .AND. VAL(CODPRO) ;
                > 5999 .AND. VAL(CODPRO) < 7000}, NIL, NIL, NIL, .F., NIL)
 
       ELSE
 
-         __DBCOPY("C:\FILETEMP.DBF", {}, NIL, NIL, NIL, NIL, .F., NIL)
+         __DBCOPY("C:\PROTMP\FILETEMP.DBF", {}, NIL, NIL, NIL, NIL, .F., NIL)
 
       ENDIF
 
@@ -201,7 +201,7 @@ PROCEDURE LISCOSRE()
 
    SET(11, "OFF")
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\FILETEMP", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\FILETEMP", NIL, NIL, .F.)
 
    IF OPC = "E"
 
@@ -209,7 +209,7 @@ PROCEDURE LISCOSRE()
             , NIL, NIL, NIL, .F.)
       __DBPACK()
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\FILETEMP", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\FILETEMP", NIL, NIL, .F.)
 
    ENDIF
 

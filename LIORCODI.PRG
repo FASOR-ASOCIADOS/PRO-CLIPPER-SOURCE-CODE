@@ -66,17 +66,17 @@ PROCEDURE LIORCODI()
 
    IF LASTREC() > 1
 
-      __DBSORT("C:\BASURA", {"FECEMI", "NUMINS"}, {||DATE() - FECEMI > ;
+      __DBSORT("C:\PROTMP\BASURA", {"FECEMI", "NUMINS"}, {||DATE() - FECEMI > ;
             WDIAS - 1}, NIL, NIL, NIL, .F.)
 
    ELSE
 
-      __DBCOPY("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+      __DBCOPY("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
 
    ENDIF
 
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
    PIDEIMP()
    __RUN("MODE LPT1:132")
    __RUN("MODE LPT1:132")

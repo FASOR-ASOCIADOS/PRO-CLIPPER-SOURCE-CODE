@@ -271,9 +271,9 @@ PROCEDURE MANPRTE()
          MEMVAR->WAB := "BASURA.NTX"
          BA()
          AMAPAS()
-         __DBSORT("C:\BASURA", {"NUMART"}, NIL, NIL, NIL, NIL, .F.)
+         __DBSORT("C:\PROTMP\BASURA", {"NUMART"}, NIL, NIL, NIL, NIL, .F.)
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          DEVPOS(12, 20)
          DEVOUT("                        ")
          MEMVAR->OPC := " "

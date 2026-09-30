@@ -121,9 +121,9 @@ PROCEDURE CONSUPAG()
          IF WTODTAR = "T"
 
             APAGAS()
-            __DBCOPYST("C:\BASURA", {})
+            __DBCOPYST("C:\PROTMP\BASURA", {})
             DBCLOSEARE()
-            DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+            DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
             __DBAPP("&ZDIS\&WDIRECTO\PAGOSMO", {}, NIL, NIL, NIL, NIL, .F.,;
                    NIL)
             DBCOMMITAL()
@@ -134,9 +134,9 @@ PROCEDURE CONSUPAG()
          ELSE
 
             APAGAS()
-            __DBCOPYST("c:\basura", {})
+            __DBCOPYST("c:\protmp\basura", {})
             DBCLOSEARE()
-            DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+            DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
             __DBAPP("&ZDIS\&WDIRECTO\PAGOSMO", {}, {||CODTAR = WCODTAR}, ;
                   NIL, NIL, NIL, .F., NIL)
             DBCOMMITAL()
@@ -147,20 +147,20 @@ PROCEDURE CONSUPAG()
          ENDIF
 
          DBSELECTAR("10")
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
       ENDIF
 
       IF WORD = "O"
 
-         __DBSORT("C:\BASURA1", {"NUMORD", "NUMOPE", "CODTAR"}, NIL, NIL, ;
+         __DBSORT("C:\PROTMP\BASURA1", {"NUMORD", "NUMOPE", "CODTAR"}, NIL, NIL, ;
                NIL, NIL, .F.)
          MEMVAR->WCRI := "NUMORD"
          MEMVAR->WTITSOR := "O. P."
 
       ELSEIF WORD = "T"
 
-         __DBSORT("C:\BASURA1", {"CODTAR", "NUMOPE", "NUMORD"}, NIL, NIL, ;
+         __DBSORT("C:\PROTMP\BASURA1", {"CODTAR", "NUMOPE", "NUMORD"}, NIL, NIL, ;
                NIL, NIL, .F.)
          MEMVAR->WCRI := "CODTAR"
          MEMVAR->WTITSOR := "LABOR"
@@ -169,7 +169,7 @@ PROCEDURE CONSUPAG()
 
          MEMVAR->WCRI := "NUMOPE"
          MEMVAR->WTITSOR := "OPERARIO"
-         __DBSORT("C:\BASURA1", {"NUMOPE", "CODTAR", "NUMORD"}, NIL, NIL, ;
+         __DBSORT("C:\PROTMP\BASURA1", {"NUMOPE", "CODTAR", "NUMORD"}, NIL, NIL, ;
                NIL, NIL, .F.)
 
       ENDIF
@@ -177,7 +177,7 @@ PROCEDURE CONSUPAG()
       SET(11, "OFF")
       DBCLOSEARE()
       DBSELECTAR("10")
-      DBUSEAREA(.F., NIL, "C:\BASURA1", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA1", NIL, NIL, .F.)
       DBEVAL({||DBRECALL()}, NIL, NIL, NIL, NIL, .F.)
       DBEVAL({||FIELD->NUMOPE := VAL(CODOPE)}, NIL, NIL, NIL, NIL, .F.)
       DBEVAL({||DBDELETE()}, {||NUMORD < WOPD .OR. NUMORD > WOPH}, NIL, ;

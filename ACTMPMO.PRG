@@ -142,7 +142,7 @@ PROCEDURE ACTMPMO()
 
       ENDIF
 
-      DBCREATEIN("C:\BASURA", XKEY, (&("{||" + XKEY + "}")), NIL)
+      DBCREATEIN("C:\PROTMP\BASURA", XKEY, (&("{||" + XKEY + "}")), NIL)
       DBCLOSEARE()
       MEMVAR->WMASACT := "S"
       MEMVAR->WCONBOR := 0
@@ -181,7 +181,7 @@ PROCEDURE ACTMPMO()
          ENDIF
 
          ORDLISTCLE()
-         ORDLISTADD("C:\BASURA")
+         ORDLISTADD("C:\PROTMP\BASURA")
 
          IF SWA = 2 .AND. XKEY = "NUMORD"
 
@@ -230,7 +230,7 @@ PROCEDURE ACTMPMO()
             ENDIF
 
             ORDLISTCLE()
-            ORDLISTADD("C:\BASURA")
+            ORDLISTADD("C:\PROTMP\BASURA")
             DBGOTO(WPOSN)
 
             IF SWA = 1
@@ -389,7 +389,7 @@ PROCEDURE ACTMPMO()
             ENDIF
 
             ORDLISTCLE()
-            ORDLISTADD("C:\BASURA")
+            ORDLISTADD("C:\PROTMP\BASURA")
             DBGOTO(WPOSN)
 
             IF OPC = "E"
@@ -491,7 +491,7 @@ PROCEDURE ACTMPMO()
          ENDIF
 
          ORDLISTCLE()
-         ORDLISTADD("C:\BASURA")
+         ORDLISTADD("C:\PROTMP\BASURA")
          DBGOTO(WPOSN)
          MEMVAR->WCONTE1 := (&(MEMVAR->WCAMPO1))
          MEMVAR->WCONTE2 := (&(MEMVAR->WCAMPO2))
@@ -535,7 +535,7 @@ PROCEDURE ACTMPMO()
             ENDIF
 
             ORDLISTCLE()
-            ORDLISTADD("C:\BASURA")
+            ORDLISTADD("C:\PROTMP\BASURA")
             DBGOTO(WPOSN)
             MEMVAR->WCONTE10 := (&(MEMVAR->WCAMPO10))
             MEMVAR->WCONTE11 := (&(MEMVAR->WCAMPO11))
@@ -570,7 +570,7 @@ PROCEDURE ACTMPMO()
          ENDIF
 
          ORDLISTCLE()
-         ORDLISTADD("C:\BASURA")
+         ORDLISTADD("C:\PROTMP\BASURA")
          DBGOTO(WPOSN)
          VEALOCK()
          FIELD->&(MEMVAR->WCAMPO1) := WCONTE1
@@ -626,7 +626,7 @@ PROCEDURE ACTMPMO()
          ENDIF
 
          ORDLISTCLE()
-         ORDLISTADD("C:\BASURA")
+         ORDLISTADD("C:\PROTMP\BASURA")
          DBGOTO(WPOSN)
          __DBPACK()
          DBCLOSEARE()

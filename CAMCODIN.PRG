@@ -153,9 +153,9 @@ PROCEDURE CAMCODIN()
       ORDLISTADD("&ZDIS\&WDIRECTO\CODMAEPA")
       MEMVAR->WAB := "BASURA.DBF"
       BA()
-      __DBCOPY("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+      __DBCOPY("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
       DBEVAL({||DBDELETE()}, NIL, NIL, NIL, NIL, .F.)
       SET(11, "OFF")
       DBGOTOP()
@@ -201,7 +201,7 @@ PROCEDURE CAMCODIN()
 
       __DBPACK()
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
       IF LASTREC() > 0
 
@@ -263,9 +263,9 @@ PROCEDURE CAMCODIN()
       ORDLISTADD("&ZDIS\&WDIRECTO\CODMAEPA")
       MEMVAR->WAB := "BASURA.DBF"
       BA()
-      __DBCOPY("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+      __DBCOPY("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
       DBEVAL({||DBDELETE()}, NIL, NIL, NIL, NIL, .F.)
       SET(11, "OFF")
       DBGOTOP()
@@ -295,7 +295,7 @@ PROCEDURE CAMCODIN()
 
       __DBPACK()
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
       IF LASTREC() > 0
 

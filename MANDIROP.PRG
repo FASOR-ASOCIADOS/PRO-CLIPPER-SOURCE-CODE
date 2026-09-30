@@ -72,7 +72,7 @@ PROCEDURE MANDIROP()
          MEMVAR->WAB := "BASURA.NTX"
          BA()
          ACOSE()
-         DBCREATEIN("C:\BASURA", "LETORD+ACTUALIZAD", {||LETORD + ;
+         DBCREATEIN("C:\PROTMP\BASURA", "LETORD+ACTUALIZAD", {||LETORD + ;
                ACTUALIZAD}, NIL)
          DBCLOSEARE()
 
@@ -118,7 +118,7 @@ PROCEDURE MANDIROP()
 
             ACOSS()
             ORDLISTCLE()
-            ORDLISTADD("C:\BASURA")
+            ORDLISTADD("C:\PROTMP\BASURA")
 
             IF WNUMORD = 999
 

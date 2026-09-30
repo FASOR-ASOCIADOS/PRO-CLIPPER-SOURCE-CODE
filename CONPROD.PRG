@@ -49,10 +49,10 @@ PROCEDURE CONPROD()
          MEMVAR->WAB := "BASURA.DBF"
          BA()
          ACOSS()
-         __DBSORT("C:\BASURA", {"CODPRO", "NUMORD", "NUMCLI"}, {||;
+         __DBSORT("C:\PROTMP\BASURA", {"CODPRO", "NUMORD", "NUMCLI"}, {||;
                ACTUALIZAD <> "C"}, NIL, NIL, NIL, .F.)
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          MEMVAR->OPC := " "
 
          DO WHILE OPC <> "N"
@@ -196,7 +196,7 @@ PROCEDURE CONPROD()
          MEMVAR->WAB := "BASURA.NTX"
          BA()
          ACOSE()
-         DBCREATEIN("C:\BASURA", "LETORD", {||LETORD}, NIL)
+         DBCREATEIN("C:\PROTMP\BASURA", "LETORD", {||LETORD}, NIL)
          DBCLOSEARE()
          MEMVAR->OPC := " "
 
@@ -223,7 +223,7 @@ PROCEDURE CONPROD()
 
             ACOSS()
             ORDLISTCLE()
-            ORDLISTADD("C:\BASURA")
+            ORDLISTADD("C:\PROTMP\BASURA")
 
             IF WNUMORD = "999     "
 
@@ -273,7 +273,7 @@ PROCEDURE CONPROD()
 
                ACOSS()
                ORDLISTCLE()
-               ORDLISTADD("C:\BASURA")
+               ORDLISTADD("C:\PROTMP\BASURA")
                DBGOTO(WPOS13)
 
                DO WHILE CL < 20
@@ -357,10 +357,10 @@ PROCEDURE CONPROD()
          MEMVAR->WAB := "BASURA.DBF"
          BA()
          ACOSS()
-         __DBSORT("C:\BASURA", {"NUMCLI", "NUMORD"}, {||ACTUALIZAD <> "C"},;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMCLI", "NUMORD"}, {||ACTUALIZAD <> "C"},;
                 NIL, NIL, NIL, .F.)
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          MEMVAR->OPC := " "
 
          DO WHILE OPC <> "N"
@@ -521,10 +521,10 @@ PROCEDURE CONPROD()
          MEMVAR->WAB := "BASURA.DBF"
          BA()
          ACOSS()
-         __DBSORT("C:\BASURA", {"NUMORD"}, {||ACTUALIZAD <> "C"}, NIL, NIL,;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMORD"}, {||ACTUALIZAD <> "C"}, NIL, NIL,;
                 NIL, .F.)
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
          IF OPC = "P"
 
@@ -690,18 +690,18 @@ PROCEDURE CONPROD()
                BA()
                DBEVAL({||FIELD->CODPRO := RIGHT(STR(VAL(CODPRO)), 5)}, NIL, ;
                      NIL, NIL, NIL, .F.)
-               __DBSORT("C:\BASURA1", {"CODPRO", "LETORD"}, {||NUMORD > ;
+               __DBSORT("C:\PROTMP\BASURA1", {"CODPRO", "LETORD"}, {||NUMORD > ;
                      WDESDE - 1 .AND. NUMORD < WHASTA + 1}, NIL, NIL, NIL, ;
                      .F.)
                DBCLOSEARE()
-               DBUSEAREA(.F., NIL, "C:\BASURA1", NIL, NIL, .F.)
+               DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA1", NIL, NIL, .F.)
                DBEVAL({||FIELD->NUMCLI := VAL(CODPRO)}, NIL, NIL, NIL, NIL, ;
                      .F.)
-               __DBSORT("C:\FILETEMP", {"NUMCLI", "LETORD"}, {||NUMORD > ;
+               __DBSORT("C:\PROTMP\FILETEMP", {"NUMCLI", "LETORD"}, {||NUMORD > ;
                      WDESDE - 1 .AND. NUMORD < WHASTA + 1}, NIL, NIL, NIL, ;
                      .F.)
                DBCLOSEARE()
-               DBUSEAREA(.F., NIL, "C:\FILETEMP", NIL, NIL, .F.)
+               DBUSEAREA(.F., NIL, "C:\PROTMP\FILETEMP", NIL, NIL, .F.)
 
             ELSE
 
@@ -711,14 +711,14 @@ PROCEDURE CONPROD()
                BA()
                MEMVAR->WAB := "BASURA1.NTX"
                BA()
-               __DBSORT("C:\BASURA1", {"NUMORD"}, {||NUMORD > WDESDE - 1 ;
+               __DBSORT("C:\PROTMP\BASURA1", {"NUMORD"}, {||NUMORD > WDESDE - 1 ;
                      .AND. NUMORD < WHASTA + 1}, NIL, NIL, NIL, .F.)
                DBCLOSEARE()
-               DBUSEAREA(.F., NIL, "C:\BASURA1", NIL, NIL, .F.)
-               __DBSORT("C:\FILETEMP", {"NUMORD"}, {||NUMORD > WDESDE - 1 ;
+               DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA1", NIL, NIL, .F.)
+               __DBSORT("C:\PROTMP\FILETEMP", {"NUMORD"}, {||NUMORD > WDESDE - 1 ;
                      .AND. NUMORD < WHASTA + 1}, NIL, NIL, NIL, .F.)
                DBCLOSEARE()
-               DBUSEAREA(.F., NIL, "C:\FILETEMP", NIL, NIL, .F.)
+               DBUSEAREA(.F., NIL, "C:\PROTMP\FILETEMP", NIL, NIL, .F.)
 
             ENDIF
 

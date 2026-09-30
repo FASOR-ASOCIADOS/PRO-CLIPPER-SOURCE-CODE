@@ -67,11 +67,11 @@ PROCEDURE LISCONPR()
 
       AMAINS()
       ESPERE()
-      __DBSORT("C:\BASURA.DBF", {"LINEA", "CODNUM"}, {||CODNUM > WDESDE - ;
+      __DBSORT("C:\PROTMP\BASURA.DBF", {"LINEA", "CODNUM"}, {||CODNUM > WDESDE - ;
             1 .AND. CODNUM < WHASTA + 1}, NIL, NIL, NIL, .F.)
       DBCLOSEARE()
       SETCOLOR("+W")
-      DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
       PIDEIMP()
       __RUN("MODE LPT1:132")
       __REPORTFO("LISCONPR", .T., NIL, .F., NIL, NIL, NIL, NIL, .F., .F., ;

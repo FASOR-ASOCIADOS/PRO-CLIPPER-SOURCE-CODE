@@ -130,6 +130,12 @@ PROCEDURE PRO()
 
    ENDIF
 
+   /* Windows 7 y posteriores no ignoran los espacios al final de una
+      carpeta intermedia de la ruta, como si lo hacian MS-DOS y Windows XP:
+      "F:\PRO      \ZDIS.MEM" da error de ruta no encontrada. Por eso el
+      directorio se recorta aqui, antes de armar ninguna ruta. */
+   MEMVAR->WDIRECTO := ALLTRIM(WDIRECTO)
+
    __MSAVE("&ZDIS\&WDIRECTO\ZDIS", "ZDIS", .T.)
 
    IF FILE("WDIRECTO.MEM")
@@ -138,6 +144,9 @@ PROCEDURE PRO()
 
    ENDIF
 
+   /* se vuelve a rellenar solo para guardarlo: asi el campo de la
+      proxima ejecucion conserva su ancho */
+   MEMVAR->WDIRECTO := PADR(WDIRECTO, 9)
    __MSAVE("WDIRECTO", "WDIRECTO", .T.)
    MEMVAR->WDIRECTO := ALLTRIM(WDIRECTO)
    MEMVAR->XDIS := ZDIS

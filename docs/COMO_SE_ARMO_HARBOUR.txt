@@ -1,0 +1,49 @@
+COMO SE ARMO EL COMPILADOR HARBOUR
+==================================
+
+Harbour no viene en Debian: hay que compilarlo. Se compila dos veces, porque
+para generar un ejecutable de Windows desde Linux se necesita primero el
+compilador nativo de Linux como herramienta anfitriona.
+
+Quedo instalado en ~/.cache/pro-harbour/hb-linux (las dos versiones en el
+mismo arbol: lib/linux/gcc y lib/win/mingw64). Si se borra esa carpeta, se
+rehace con estos pasos.
+
+1. Codigo fuente
+
+   mkdir -p ~/.cache/pro-harbour && cd ~/.cache/pro-harbour
+   git clone --depth 1 https://github.com/harbour/core.git core
+
+2. Harbour para Linux (herramienta anfitriona)
+
+   cd ~/.cache/pro-harbour/core
+   env -u HB_PLATFORM -u HB_COMPILER -u HB_INSTALL_PREFIX \
+       HB_INSTALL_PREFIX=$HOME/.cache/pro-harbour/hb-linux \
+       HB_BUILD_CONTRIBS=no \
+       bash -c 'make -j8 && make install'
+
+   Nota: compilar e instalar en un solo paso con -j8 falla (se pisan los
+   directorios); por eso van encadenados con &&.
+
+3. Harbour para Windows x64 (compilacion cruzada, al mismo arbol)
+
+   cd ~/.cache/pro-harbour/core
+   env HB_PLATFORM=win HB_COMPILER=mingw64 \
+       HB_CCPREFIX=x86_64-w64-mingw32- \
+       HB_HOST_BIN=$HOME/.cache/pro-harbour/hb-linux/bin \
+       HB_INSTALL_PREFIX=$HOME/.cache/pro-harbour/hb-linux \
+       HB_BUILD_CONTRIBS=no \
+       HB_WITH_ZLIB=local HB_WITH_PCRE=local \
+       HB_WITH_CURSES=no HB_WITH_SLANG=no HB_WITH_X11=no HB_WITH_GPM=no \
+       bash -c 'make -j8 && make install'
+
+   Las cuatro ultimas variables son necesarias: sin ellas la compilacion
+   cruzada toma la zlib, la pcre y los manejadores de pantalla de Linux, y
+   arrastra las cabeceras de /usr/include, que mingw no puede usar.
+
+4. Detalle a tener en cuenta
+
+   El ~/.bashrc define HB_INSTALL_PREFIX=~/harbour_win32, HB_PLATFORM=win y
+   HB_COMPILER=mingw de un intento anterior que quedo a medias (esa carpeta
+   no existe). Esas variables confunden a hbmk2, por eso los scripts las
+   limpian con "env -u".

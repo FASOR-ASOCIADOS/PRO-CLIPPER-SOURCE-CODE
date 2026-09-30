@@ -169,11 +169,11 @@ PROCEDURE MANPROV()
             AMAPRVS()
             MEMVAR->WAB := "BASURA.DBF"
             BA()
-            __DBSORT("C:\BASURA", {"CODPROV"}, NIL, NIL, NIL, NIL, .F.)
+            __DBSORT("C:\PROTMP\BASURA", {"CODPROV"}, NIL, NIL, NIL, NIL, .F.)
             DBCLOSEARE()
             FERASE("&ZDIS\&WDIRECTO\MAPROV.DBF")
             FERASE("&ZDIS\&WDIRECTO\COD-PROV.NTX")
-            DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+            DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
             __DBCOPY("&ZDIS\&WDIRECTO\MAPROV.DBF", {}, NIL, NIL, NIL, NIL, ;
                   .F., NIL)
             DBCLOSEARE()
@@ -300,7 +300,7 @@ PROCEDURE MANPROV()
          MEMVAR->WAB := "BASURA.DBF"
          BA()
          AMAPRVS()
-         __DBSORT("C:\BASURA", {"CODPROV"}, NIL, NIL, NIL, NIL, .F.)
+         __DBSORT("C:\PROTMP\BASURA", {"CODPROV"}, NIL, NIL, NIL, NIL, .F.)
          DBCLOSEARE()
 
          IF FILE("&ZDIS\&WDIRECTO\MAPROV.BAK")
@@ -311,7 +311,7 @@ PROCEDURE MANPROV()
 
          FRENAME("&ZDIS\&WDIRECTO\MAPROV.DBF", ;
                "&ZDIS\&WDIRECTO\MAPROV.BAK")
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          __DBCOPY("&ZDIS\&WDIRECTO\MAPROV.DBF", {}, NIL, NIL, NIL, NIL, ;
                .F., NIL)
          DBCLOSEARE()

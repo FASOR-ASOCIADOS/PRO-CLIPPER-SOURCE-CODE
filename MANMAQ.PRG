@@ -11,9 +11,9 @@ PROCEDURE MANMAQ()
    MEMVAR->WAB := "BASURA.DBF"
    BA()
    AMAQS()
-   __DBCOPY("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+   __DBCOPY("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
    MEMVAR->OPC := " "
    MENU()
    DEVPOS(4, 1)
@@ -146,7 +146,7 @@ PROCEDURE MANMAQ()
          FIELD->ULTMANT := WULTMANT
          FIELD->ULTFALLO := WULTFALLO
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          MEMVAR->CL := 6
          SCROLL(CL, 1, 23, 78)
          SETPOS(CL, 1)
@@ -242,10 +242,10 @@ PROCEDURE MANMAQ()
          DBCLOSEARE()
          AMAQE()
          DBEVAL({||DBDELETE()}, NIL, NIL, NIL, NIL, .F.)
-         __DBAPP("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+         __DBAPP("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
          __DBPACK()
          DBCLOSEARE()
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
          MEMVAR->CL := 6
          SCROLL(CL, 1, 23, 78)
          SETPOS(CL, 1)
@@ -302,7 +302,7 @@ PROCEDURE MANMAQ()
             DBDELETE()
             __DBPACK()
             DBCLOSEARE()
-            DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+            DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
          ENDIF
 
@@ -325,7 +325,7 @@ PROCEDURE MANMAQ()
 
    AMAQE()
    DBEVAL({||DBDELETE()}, NIL, NIL, NIL, NIL, .F.)
-   __DBAPP("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+   __DBAPP("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
    __DBPACK()
    DBCLOSEARE()
    MEMVAR->OPC := " "

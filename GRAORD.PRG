@@ -14,16 +14,16 @@ PROCEDURE GRAORD()
    MEMVAR->WAB := "ORDTEM.DBF"
    BA()
 
-   IF  .NOT. FILE("C:\ORDTEM.DBF")
+   IF  .NOT. FILE("C:\PROTMP\ORDTEM.DBF")
 
       AOCS()
-      __DBCOPYST("C:\ORDTEM", {})
+      __DBCOPYST("C:\PROTMP\ORDTEM", {})
       DBCLOSEARE()
 
    ENDIF
 
    DBSELECTAR("1")
-   DBUSEAREA(.F., NIL, "C:\ORDTEM", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\ORDTEM", NIL, NIL, .F.)
    AMAPRVE()
    ORDLISTCLE()
    ORDLISTADD("&ZDIS\&WDIRECTO\COD-PROV")
@@ -523,15 +523,15 @@ PROCEDURE GRAORD()
 
       DBCLOSEARE()
       AOCE()
-      __DBAPP("C:\ORDTEM", {}, {||CANPED > 0}, NIL, NIL, NIL, .F., NIL)
+      __DBAPP("C:\PROTMP\ORDTEM", {}, {||CANPED > 0}, NIL, NIL, NIL, .F., NIL)
       DBEVAL({||FIELD->CONSE := RECNO()}, NIL, NIL, NIL, NIL, .F.)
       DBCLOSEARE()
       DBSELECTAR("1")
-      DBUSEAREA(.F., NIL, "C:\ORDTEM", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\ORDTEM", NIL, NIL, .F.)
       SAP()
       DBCLOSEARE()
       DBSELECTAR("1")
-      DBUSEAREA(.F., NIL, "C:\ORDTEM", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\ORDTEM", NIL, NIL, .F.)
       DEVPOS(23, 0)
       DEVOUT("                                                   ")
 

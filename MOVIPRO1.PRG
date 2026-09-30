@@ -33,13 +33,13 @@ PROCEDURE MOVIPRO1()
       MEMVAR->WAB := "BASURA5.DBF"
       BA()
       AMVPRSS()
-      __DBCOPYST("C:\BASURA5", {})
+      __DBCOPYST("C:\PROTMP\BASURA5", {})
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA5", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA5", NIL, NIL, .F.)
       __DBAPP("&ZDIS\&WDIRECTO\&FMOVINS", {}, NIL, NIL, NIL, NIL, .F., NIL)
       __DBAPP("&ZDIS\&WDIRECTO\MOVPRSEM", {}, NIL, NIL, NIL, NIL, .F., NIL)
       DBCLOSEARE()
-      DBUSEAREA(.F., NIL, "C:\BASURA5", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA5", NIL, NIL, .F.)
 
    ENDIF
 
@@ -229,36 +229,36 @@ PROCEDURE MOVIPRO1()
 
    ELSEIF WPER = "C"
 
-      DBUSEAREA(.F., NIL, "C:\BASURA5", NIL, NIL, .F.)
+      DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA5", NIL, NIL, .F.)
 
    ENDIF
 
    SET(3, 2)
    ESPERE()
-   __DBCOPY("C:\BASURA2", {}, NIL, NIL, NIL, NIL, .F., NIL)
+   __DBCOPY("C:\PROTMP\BASURA2", {}, NIL, NIL, NIL, NIL, .F., NIL)
    DBCLOSEARE()
-   DBUSEAREA(.F., NIL, "C:\BASURA2", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA2", NIL, NIL, .F.)
    DBEVAL({||FIELD->NUMPROV := RECNO()}, NIL, NIL, NIL, NIL, .F.)
 
    IF WORD = "O"
 
       IF WTODCOD = "T" .AND. WTODTIP = "T"
 
-         __DBCOPY("C:\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
+         __DBCOPY("C:\PROTMP\BASURA", {}, NIL, NIL, NIL, NIL, .F., NIL)
 
       ELSEIF WTODCOD = "T" .AND. WTODTIP = "U"
 
-         __DBCOPY("C:\BASURA", {}, {||TIPOMOV = WTIP}, NIL, NIL, NIL, .F., ;
+         __DBCOPY("C:\PROTMP\BASURA", {}, {||TIPOMOV = WTIP}, NIL, NIL, NIL, .F., ;
                NIL)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "T"
 
-         __DBCOPY("C:\BASURA", {}, {||CODIGO = WCOD}, NIL, NIL, NIL, .F., ;
+         __DBCOPY("C:\PROTMP\BASURA", {}, {||CODIGO = WCOD}, NIL, NIL, NIL, .F., ;
                NIL)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "U"
 
-         __DBCOPY("C:\BASURA", {}, {||CODIGO = WCOD .AND. TIPOMOV = WTIP}, ;
+         __DBCOPY("C:\PROTMP\BASURA", {}, {||CODIGO = WCOD .AND. TIPOMOV = WTIP}, ;
                NIL, NIL, NIL, .F., NIL)
 
       ENDIF
@@ -267,22 +267,22 @@ PROCEDURE MOVIPRO1()
 
       IF WTODCOD = "T" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
                "NUMDOC"}, NIL, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "T" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
                "NUMDOC"}, {||TIPOMOV = WTIP}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
                "NUMDOC"}, {||CODIGO = WCOD}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
                "NUMDOC"}, {||TIPOMOV = WTIP .AND. CODIGO = WCOD}, NIL, NIL,;
                 NIL, .F.)
 
@@ -292,22 +292,22 @@ PROCEDURE MOVIPRO1()
 
       IF WTODCOD = "T" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
+         __DBSORT("C:\PROTMP\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
                "NUMDOC"}, NIL, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "T" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
+         __DBSORT("C:\PROTMP\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
                "NUMDOC"}, {||TIPOMOV = WTIP}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
+         __DBSORT("C:\PROTMP\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
                "NUMDOC"}, {||CODIGO = WCOD}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
+         __DBSORT("C:\PROTMP\BASURA", {"TIPOMOV", "CODNUM", "NUMCOLOR", "FECHA", ;
                "NUMDOC"}, {||TIPOMOV = WTIP .AND. CODIGO = WCOD}, NIL, NIL,;
                 NIL, .F.)
 
@@ -317,22 +317,22 @@ PROCEDURE MOVIPRO1()
 
       IF WTODCOD = "T" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
                "FECHA"}, NIL, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "T" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
                "FECHA"}, {||TIPOMOV = WTIP}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "T"
 
-         __DBSORT("C:\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
                "FECHA"}, {||CODIGO = WCOD}, NIL, NIL, NIL, .F.)
 
       ELSEIF WTODCOD = "U" .AND. WTODTIP = "U"
 
-         __DBSORT("C:\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
+         __DBSORT("C:\PROTMP\BASURA", {"NUMDOC", "CODNUM", "NUMCOLOR", "TIPOMOV", ;
                "FECHA"}, {||TIPOMOV = WTIP .AND. CODIGO = WCOD}, NIL, NIL, ;
                NIL, .F.)
 
@@ -340,14 +340,14 @@ PROCEDURE MOVIPRO1()
 
    ELSE
 
-      __DBSORT("C:\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
+      __DBSORT("C:\PROTMP\BASURA", {"CODNUM", "NUMCOLOR", "FECHA", "TIPOMOV", ;
             "NUMDOC"}, NIL, NIL, NIL, NIL, .F.)
 
    ENDIF
 
    DBCLOSEARE()
    DBSELECTAR("6")
-   DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
+   DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
 
    IF WTODCOD = "U" .AND. XXVALCOD > 199 .AND. XXVALCOD < 300
 

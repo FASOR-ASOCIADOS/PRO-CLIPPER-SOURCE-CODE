@@ -181,11 +181,11 @@ PROCEDURE MANMAMI()
          MEMVAR->WAB := "BASURA.NTX"
          BA()
          AMAINS()
-         __DBCOPYST("C:\BASURA", {})
+         __DBCOPYST("C:\PROTMP\BASURA", {})
          DBCLOSEARE()
          DBSELECTAR("1")
-         DBUSEAREA(.F., NIL, "C:\BASURA", NIL, NIL, .F.)
-         DBCREATEIN("C:\BASURA.NTX", "CODIGO", {||CODIGO}, NIL)
+         DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA", NIL, NIL, .F.)
+         DBCREATEIN("C:\PROTMP\BASURA.NTX", "CODIGO", {||CODIGO}, NIL)
 
          DO WHILE CM < ZMINMAX0 + 1
 
@@ -193,9 +193,9 @@ PROCEDURE MANMAMI()
             BA()
             MEMVAR->WNOMARC := "MAINSU" + ALLTRIM(TRANSFORM(WXMES, "99")) + ;
                   ".DBF"
-            __COPYFILE("&ZDIS\&WDIRECTO\&WNOMARC", "C:\BASURA1.DBF")
+            __COPYFILE("&ZDIS\&WDIRECTO\&WNOMARC", "C:\PROTMP\BASURA1.DBF")
             DBSELECTAR("2")
-            DBUSEAREA(.F., NIL, "C:\BASURA1", NIL, NIL, .F.)
+            DBUSEAREA(.F., NIL, "C:\PROTMP\BASURA1", NIL, NIL, .F.)
 
             DO WHILE  .NOT. EOF()
 
